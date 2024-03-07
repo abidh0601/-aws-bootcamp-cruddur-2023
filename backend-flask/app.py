@@ -17,7 +17,7 @@ from services.notifications_activities import *
 # HoneyComb
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry.instrumentation.requests import RequestInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
@@ -45,7 +45,7 @@ cors = CORS(
 
 # HoneyComb
 #Initialize Automatic Instrumentation with Flask - Honeycomb
-FlaskInstrumentation.instrument_app(app)
+FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument
 
 @app.route("/api/message_groups", methods=['GET'])
