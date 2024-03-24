@@ -8,7 +8,7 @@ import { Auth } from 'aws-amplify';
 
 export default function SigninPage() {
 
-  const [email, setEmail] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [cognitoErrors, setCognitoErrors]  = React.useState('')
 
@@ -16,7 +16,7 @@ export default function SigninPage() {
     event.preventDefault();
     setCognitoErrors('')
 
-    Auth.signIn(email, password)
+    Auth.signIn(username, password)
       .then(user => {
           localStorage.setItem("access-token", user.signInUserSession.accessToken.jwtToken)
           window.location.href = "/"
@@ -32,8 +32,8 @@ export default function SigninPage() {
     return false
   }
 
-  const email_onchange = (event) => {
-    setEmail(event.target.value);
+  const username_onchange = (event) => {
+    setUsername(event.target.value);
   }
   const password_onchange = (event) => {
     setPassword(event.target.value);
@@ -58,11 +58,11 @@ export default function SigninPage() {
           <h2>Sign into your Cruddur account</h2>
           <div className='fields'>
             <div className='field text_field username'>
-              <label>Email</label>
+              <label>Username or Email</label>
               <input
                 type="text"
-                value={email}
-                onChange={email_onchange} 
+                value={username}
+                onChange={username_onchange} 
               />
             </div>
             <div className='field text_field password'>
