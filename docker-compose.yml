@@ -36,16 +36,16 @@ services:
   #   volumes:
   #     - "./docker/dynamodb:/home/dynamodblocal/data"
   #   working_dir: /home/dynamodblocal
-  # db:
-  #   image: postgres:13-alpine
-  #   restart: always
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=password
-  #   ports:
-  #     - '5432:5432'
-  #   volumes:
-  #     - db:/var/lib/postgresql/data
+  db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
 
 # name the flag is a hack to change the default prepend foldeer
 # name when outputting the image names

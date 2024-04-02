@@ -1,0 +1,23 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.activities;
+
+CREATE TABLE public.users (
+    uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    display_name TEXT,
+    handle TEXT,
+    cognito_user_id TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE public.activities (
+    uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    message TEXT NOT NULL,
+    replies_count INTEGER DEFAULT 0,
+    repost_coutn INTEGER DEFAULT 0,
+    likes_count INTEGER DEFAULT 0,
+    reply_to_activity_uuid integer,
+    expires_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);

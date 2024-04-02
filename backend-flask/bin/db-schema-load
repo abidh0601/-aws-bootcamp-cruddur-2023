@@ -1,0 +1,15 @@
+#! /usr/bin/bash
+
+schema_path=$(realpath .)/backend-flask/db/schema.sql
+
+if [ "$1" = "prod" ]; then
+    echo "using production"
+    CON_URL=$PROD_CONNECTION_URL
+else
+    echo "using dev"
+    CON_URL=$CONNECTION_URL
+fi
+
+
+echo $schema_path
+psql $CON_URL cruddur < $schema_path
