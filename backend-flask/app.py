@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request
+from flask import request, abort, make_response, jsonify
 from flask_cors import CORS, cross_origin
 import os
 
@@ -14,15 +14,24 @@ from services.create_message import *
 from services.show_activity import *
 from services.notifications_activities import *
 
+from lib.cognito_token_verification import *
+
 app = Flask(__name__)
+
+cognitoTokenVerification = CognitoTokenVerification(
+  user_pool_id = os.getenv("AWS_COGNITO_USER_POOL_ID"),
+  user_pool_client_id = os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+  region = os.getenv("AWS_DEFAULT_REGION")
+)
+
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
-  expose_headers="location,link",
-  allow_headers="content-type,if-modified-since",
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
 )
 
@@ -63,6 +72,13 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
+
+  try:
+    claims = cognitoTokenVerification.verify(request.headers)
+  except TokenVerifyError as error:
+    abort(make_response(jsonify(message = str(error)), 401))
+  
+
   data = HomeActivities.run()
   return data, 200
 
