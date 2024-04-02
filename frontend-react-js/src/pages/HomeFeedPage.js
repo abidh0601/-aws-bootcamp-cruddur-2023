@@ -10,6 +10,8 @@ import ReplyForm from '../components/ReplyForm';
 // [TODO] Authenication
 import Cookies from 'js-cookie'
 
+import { Auth } from 'aws-amplify';
+
 export default function HomeFeedPage() {
   const [activities, setActivities] = React.useState([]);
   const [popped, setPopped] = React.useState(false);
@@ -22,7 +24,10 @@ export default function HomeFeedPage() {
     try {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
       const res = await fetch(backend_url, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access-token")}`
+        }
       });
       let resJson = await res.json();
       if (res.status === 200) {
@@ -36,14 +41,20 @@ export default function HomeFeedPage() {
   };
 
   const checkAuth = async () => {
-    console.log('checkAuth')
-    // [TODO] Authenication
-    if (Cookies.get('user.logged_in')) {
+    Auth.currentAuthenticatedUser({
+      bypassCache: false
+    })
+    .then((user) => {
+      console.log('user', user)
+      return Auth.currentAuthenticatedUser()
+    })
+    .then((cognito_user) => {
       setUser({
-        display_name: Cookies.get('user.name'),
-        handle: Cookies.get('user.username')
+        display_name: cognito_user.attributes.name,
+        handle: cognito_user.attributes.preferred_username
       })
-    }
+    })
+    .catch((err) => console.log(err))
   };
 
   React.useEffect(()=>{
