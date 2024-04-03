@@ -80,6 +80,9 @@ def data_home():
   
 
   data = HomeActivities.run()
+
+  app.logger.info("data", data)
+
   return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])
