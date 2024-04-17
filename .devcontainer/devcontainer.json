@@ -38,5 +38,6 @@
 				"42Crunch.vscode-openapi"
 			]
 		}
-	}
+	},
+	"postStartCommand": "$PWD/backend-flask/bin/rds-update-sg-rule"
 }
