@@ -2,3 +2,5 @@ flask
 flask-cors
 requests
 python-jose
+psycopg[binary]
+psycopg[pool]
