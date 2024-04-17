@@ -13,9 +13,10 @@ CREATE TABLE public.users (
 
 CREATE TABLE public.activities (
     uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_uuid UUID NOT NULL,
     message TEXT NOT NULL,
     replies_count INTEGER DEFAULT 0,
-    repost_coutn INTEGER DEFAULT 0,
+    reposts_count INTEGER DEFAULT 0,
     likes_count INTEGER DEFAULT 0,
     reply_to_activity_uuid integer,
     expires_at TIMESTAMP,
