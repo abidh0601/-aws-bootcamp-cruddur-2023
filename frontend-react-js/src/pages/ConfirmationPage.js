@@ -1,6 +1,6 @@
 import './ConfirmationPage.css';
 import React from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {ReactComponent as Logo} from '../components/svg/logo.svg';
 
 import { Auth } from 'aws-amplify';
@@ -10,9 +10,7 @@ export default function ConfirmationPage() {
   const [code, setCode] = React.useState('');
   const [codeSent, setCodeSent] = React.useState(false);
   const [cognitoErrors, setCognitoErrors] = React.useState('');
-
-
-  const params = useParams();
+  const [searchParams] = useSearchParams()
 
   const code_onchange = (event) => {
     setCode(event.target.value);
@@ -26,7 +24,7 @@ export default function ConfirmationPage() {
     setCognitoErrors('')
 
     try {
-      await Auth.resentSignUp(email)
+      await Auth.resendSignUp(email)
       console.log('code resent successfully')
       setCodeSent(true)
     } catch(error) {
@@ -65,8 +63,8 @@ export default function ConfirmationPage() {
   }
 
   React.useEffect(()=>{
-    if (params.email) {
-      setEmail(params.email)
+    if (searchParams.get('email')) {
+      setEmail(searchParams.get('email'))
     }
   }, [])
 

@@ -6,8 +6,8 @@ services:
       FRONTEND_URL: "http://localhost:3000"
       BACKEND_URL: "http://localhost:4567"
       AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
-      AWS_COGNITO_USER_POOL_ID: "us-east-2_iyM3KVQXn"
-      AWS_COGNITO_USER_POOL_CLIENT_ID: "15u0b1thlln2ckaehvpk7lpbu9" 
+      AWS_COGNITO_USER_POOL_ID: "us-east-2_RD0sgfmW3"
+      AWS_COGNITO_USER_POOL_CLIENT_ID: "7uebi1s2gcc6ijmk5latmgnv4p" 
     build: ./backend-flask
     ports:
       - "4567:4567"
@@ -18,8 +18,8 @@ services:
       REACT_APP_BACKEND_URL: "http://localhost:4567"
       REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
-      REACT_APP_AWS_USER_POOLS_ID: "us-east-2_iyM3KVQXn"
-      REACT_APP_CLIENT_ID: "15u0b1thlln2ckaehvpk7lpbu9"
+      REACT_APP_AWS_USER_POOLS_ID: "us-east-2_RD0sgfmW3"
+      REACT_APP_CLIENT_ID: "7uebi1s2gcc6ijmk5latmgnv4p"
     build: ./frontend-react-js
     ports:
       - "3000:3000"
