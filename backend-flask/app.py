@@ -111,6 +111,8 @@ def data_activities():
   user_handle  = 'andrewbrown'
   message = request.json['message']
   ttl = request.json['ttl']
+  app.logger.info("afdssssssssssssssssssssssssssssss")
+  print("=-----------------------fadf-asdf-das------------------dfad")
   model = CreateActivity.run(message, user_handle, ttl)
   if model['errors'] is not None:
     return model['errors'], 422

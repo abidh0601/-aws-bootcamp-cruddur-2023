@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta, timezone
 
-from lib.db import pool, query_wrap_array
+from lib.db import db
 
 class HomeActivities:
   def run():
     now = datetime.now(timezone.utc).astimezone()
 
-    sql = sql = query_wrap_array("""
+    results = db.query_json_array("""
       SELECT
         activities.uuid,
         users.display_name,
@@ -22,9 +22,4 @@ class HomeActivities:
       LEFT JOIN public.users ON users.uuid = activities.user_uuid
       ORDER BY activities.created_at DESC
       """)
-    
-    with pool.connection() as connection:
-      with connection.cursor() as cursor:
-        cursor.execute(sql)
-        json = cursor.fetchone()
-    return json[0]
+    return results
