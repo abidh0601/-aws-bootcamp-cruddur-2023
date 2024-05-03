@@ -39,5 +39,5 @@
 			]
 		}
 	},
-	"postStartCommand": "$PWD/backend-flask/bin/rds-update-sg-rule"
+	"postStartCommand": "$PWD/backend-flask/bin/rds-create-sg-rule"
 }

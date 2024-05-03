@@ -1,0 +1,7 @@
+#! /bin/bash
+
+CURRENT_IP=$(curl ifconfig.me)
+
+aws ec2 authorize-security-group-ingress \
+ --group-id sg-0c509dfcaa39dfe8b \
+ --ip-permissions IpProtocol=tcp,FromPort=5432,ToPort=5432,IpRanges="[{CidrIp=$CURRENT_IP/32,Description='Local development'}]"
